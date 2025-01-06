@@ -1,0 +1,102 @@
+{
+  "users": [
+    {
+      "id": "b80d",
+      "name": "Deepanshu",
+      "email": "deepanshu@test.com",
+      "password": "deep@123"
+    },
+    {
+      "id": "512b",
+      "name": "Harry",
+      "email": "harry@testmail.com",
+      "password": "harry@123"
+    },
+    {
+      "id": "bab3",
+      "name": "Lisa",
+      "email": "lisa@test.com",
+      "password": "lisa@123"
+    },
+    {
+      "id": "8ee7",
+      "email": "hermione@test.com",
+      "password": "hermione@123",
+      "name": "Hermione"
+    },
+    {
+      "id": "0e19",
+      "email": "harrypotter@testmail.com",
+      "password": "harry@123",
+      "name": "Harry Potter"
+    },
+    {
+      "id": "73db",
+      "email": "ron@test.com",
+      "password": "ron@123",
+      "name": "Ron Weasley"
+    },
+    {
+      "id": "648b",
+      "email": "deepanshu@testmail.com",
+      "password": "deep@123",
+      "name": "Deepanshu Bajaj"
+    },
+    {
+      "id": "588c",
+      "email": "wizard@test.com",
+      "password": "wizard@123",
+      "name": "Wizard"
+    },
+    {
+      "id": "09ef",
+      "email": "helen@testingmail.com",
+      "password": "helen@123",
+      "name": "Helen Keller"
+    }
+  ],
+  "cafes": [
+    {
+      "name": "Burger King",
+      "address": "Noida Sector 18",
+      "contact": "9135789870",
+      "id": "1a3e"
+    },
+    {
+      "name": "Dominos",
+      "address": "Gurgaon Sector 20",
+      "contact": "9122200890",
+      "id": "25f6"
+    },
+    {
+      "name": "KFC",
+      "address": "Delhi, CP",
+      "contact": "9011221229",
+      "id": "23r4"
+    },
+    {
+      "name": "Uncover Cafe",
+      "address": "Delhi, Dwarka",
+      "contact": "8911222329",
+      "id": "4d4e"
+    },
+    {
+      "id": "1d8e",
+      "name": "Starbucks",
+      "address": "Delhi, Saket",
+      "contact": "9732234562"
+    },
+    {
+      "id": "594a",
+      "name": "Third Wave Coffee",
+      "address": "Delhi, Punjabi Bagh",
+      "contact": "9732233332"
+    },
+    {
+      "id": "93f9",
+      "name": "Om Sweets",
+      "address": "Noida Sector 121",
+      "contact": "9811112345"
+    }
+  ]
+}

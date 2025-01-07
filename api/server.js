@@ -25,7 +25,7 @@ export default function handler(req, res) {
 
 // Handle POST requests
 function handlePost(req, res) {
-    const { data } = req.body;
+    const data = req.body; // Use the full request body
     if (!data) {
         return res.status(400).json({ error: 'Data is required' });
     }

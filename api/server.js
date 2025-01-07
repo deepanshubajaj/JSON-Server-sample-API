@@ -5,12 +5,13 @@ let dataStore = {
 
 // Main handler
 export default function handler(req, res) {
-    const { method, url } = req;
-    const path = url.split("?")[0]; // Extract the path (e.g., "/users", "/cafes")
+    const { url } = req;
+    const path = url.split("?")[0]; // Extract the path without query params
+    const endpoint = path.replace(/^\/api/, ""); // Remove /api prefix
 
-    if (path === "/users") {
+    if (endpoint === "/users") {
         handleEntity(req, res, "users");
-    } else if (path === "/cafes") {
+    } else if (endpoint === "/cafes") {
         handleEntity(req, res, "cafes");
     } else {
         res.status(404).json({ error: "Endpoint not found" });

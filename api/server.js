@@ -1,63 +1,85 @@
-let dataStore = []; // Temporary in-memory storage (not persistent)
+let dataStore = {
+    users: [],
+    cafes: [],
+};
 
 // Main handler
 export default function handler(req, res) {
+    const { method, url } = req;
+    const path = url.split("?")[0]; // Extract the path (e.g., "/users", "/cafes")
+
+    if (path === "/users") {
+        handleEntity(req, res, "users");
+    } else if (path === "/cafes") {
+        handleEntity(req, res, "cafes");
+    } else {
+        res.status(404).json({ error: "Endpoint not found" });
+    }
+}
+
+// Generic entity handler
+function handleEntity(req, res, entity) {
     const { method } = req;
 
     switch (method) {
-        case 'POST':
-            handlePost(req, res);
+        case "GET":
+            res.status(200).json({ [entity]: dataStore[entity] });
             break;
-        case 'PUT':
-            handlePut(req, res);
+        case "POST":
+            handlePost(req, res, entity);
             break;
-        case 'DELETE':
-            handleDelete(req, res);
+        case "PUT":
+            handlePut(req, res, entity);
             break;
-        case 'GET':
-            res.status(200).json(dataStore); // Return all stored data
+        case "DELETE":
+            handleDelete(req, res, entity);
             break;
         default:
-            res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
+            res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
             res.status(405).json({ error: `Method ${method} not allowed` });
     }
 }
 
 // Handle POST requests
-function handlePost(req, res) {
-    const data = req.body; // Use the full request body
+function handlePost(req, res, entity) {
+    const data = req.body;
     if (!data) {
-        return res.status(400).json({ error: 'Data is required' });
+        return res.status(400).json({ error: "Data is required" });
     }
-    const newItem = { id: Date.now(), ...data }; // Add unique ID
-    dataStore.push(newItem);
-    res.status(201).json({ message: 'Data added', item: newItem });
+    const newItem = { id: generateId(), ...data }; // Add unique ID
+    dataStore[entity].push(newItem);
+    res.status(201).json({ message: `${entity.slice(0, -1)} added`, item: newItem });
 }
 
 // Handle PUT requests
-function handlePut(req, res) {
-    const { id, data } = req.body;
-    if (!id || !data) {
-        return res.status(400).json({ error: 'ID and data are required' });
+function handlePut(req, res, entity) {
+    const { id, ...updatedData } = req.body;
+    if (!id || Object.keys(updatedData).length === 0) {
+        return res.status(400).json({ error: "ID and data are required" });
     }
-    const itemIndex = dataStore.findIndex((item) => item.id === id);
+    const itemIndex = dataStore[entity].findIndex((item) => item.id === id);
     if (itemIndex === -1) {
-        return res.status(404).json({ error: 'Item not found' });
+        return res.status(404).json({ error: `${entity.slice(0, -1)} not found` });
     }
-    dataStore[itemIndex] = { ...dataStore[itemIndex], ...data };
-    res.status(200).json({ message: 'Data updated', item: dataStore[itemIndex] });
+    dataStore[entity][itemIndex] = { ...dataStore[entity][itemIndex], ...updatedData };
+    res.status(200).json({ message: `${entity.slice(0, -1)} updated`, item: dataStore[entity][itemIndex] });
 }
 
 // Handle DELETE requests
-function handleDelete(req, res) {
+function handleDelete(req, res, entity) {
     const { id } = req.body;
     if (!id) {
-        return res.status(400).json({ error: 'ID is required' });
+        return res.status(400).json({ error: "ID is required" });
     }
-    const itemIndex = dataStore.findIndex((item) => item.id === id);
+    const itemIndex = dataStore[entity].findIndex((item) => item.id === id);
     if (itemIndex === -1) {
-        return res.status(404).json({ error: 'Item not found' });
+        return res.status(404).json({ error: `${entity.slice(0, -1)} not found` });
     }
-    const deletedItem = dataStore.splice(itemIndex, 1);
-    res.status(200).json({ message: 'Data deleted', item: deletedItem });
+    const deletedItem = dataStore[entity].splice(itemIndex, 1);
+    res.status(200).json({ message: `${entity.slice(0, -1)} deleted`, item: deletedItem });
+}
+
+// Utility to generate unique IDs
+function generateId() {
+    return Math.random().toString(36).substr(2, 4); // Generate a short random ID
 }

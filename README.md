@@ -1,5 +1,9 @@
 <h1 align="center">🚀 JSON-Server Demo</h1>
 
+<p align="center">
+  <a href="https://json-server-sample-api.vercel.app/"><strong>Live Demo</strong></a>
+</p>
+
 JSON Server hosted on **Vercel**. It's a read-only server with dummy data and doesn't support modifications.
 
 ---
